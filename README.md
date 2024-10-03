@@ -1,63 +1,61 @@
-# Medieval Survival Game
+2. **Open the Project:**
+   - Launch Unreal Engine and open the `.uproject` file located in the root of the cloned repository.
 
-**Medieval Survival Game** is an immersive, C++-based project developed using Unreal Engine, set in a richly detailed medieval world. Players must navigate the challenges of survival by managing resources, crafting tools, and engaging with dynamic gameplay systems.
+3. **Install Dependencies:**
+   - Ensure all required Unreal Engine plugins (such as Data Registry and Gameplay Tags) are enabled in **Edit > Plugins**.
+   - Open **Visual Studio** (or **Xcode** for macOS users) and compile the project by clicking **Build** in the toolbar.
 
-## Table of Contents
+4. **Run the Game:**
+   - Once the project is compiled, you can run it from within the Unreal Engine Editor or by packaging it for your target platform.
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Gameplay Mechanics](#gameplay-mechanics)
-- [Installation](#installation)
-- [Usage](#usage)
-- [System Requirements](#system-requirements)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-- [Contact](#contact)
+## Usage
 
-## Project Overview
+### Inventory System
+The inventory system allows players to:
+- Add and remove items from their inventory.
+- Organize items by category, rarity, or custom tags.
+- Utilize items with effects such as healing, damage boosts, or stamina recovery.
 
-Medieval Survival Game offers players an authentic survival experience in a medieval setting. Through meticulous inventory management, crafting systems, and strategic gameplay, players must overcome environmental challenges, defend against threats, and thrive in a hostile world.
+### Crafting
+- Gather resources such as wood, iron, and herbs.
+- Access different crafting stations (e.g., forge, alchemy lab) to create weapons, armor, and consumables.
+- Crafting recipes are dynamically loaded from the **Data Registry**, allowing for easy addition of new items without changing the game code.
 
-## Features
+### Dynamic Gameplay Tags
+Gameplay tags are used to manage interactions and filters within the game:
+- Items are categorized by tags (e.g., "Weapon", "Consumable", "Resource").
+- Tags are used to trigger dynamic game events and behaviors (e.g., when using healing potions, equipping weapons).
 
-- **Comprehensive Inventory System:** Manage items efficiently with support for adding, removing, and organizing items within a dynamic inventory structure.
-- **Crafting Mechanics:** Create a variety of tools, weapons, and consumables using gathered resources.
-- **Gameplay Tags and Enums:** Utilize a robust tagging system combined with enums to categorize items, manage states, and facilitate dynamic interactions.
-- **Server-Side Authority:** Ensure game integrity and prevent cheating through server-authoritative inventory management.
-- **Dynamic Tag-Based Filtering:** Easily query and filter items using Gameplay Tags for enhanced gameplay mechanics.
-- **Extensible Data Management:** Implement Data Registry for centralized and flexible data handling, enabling easy updates and scalability.
-- **Modular Design:** Build upon a solid foundation with well-organized code, making future expansions and feature additions straightforward.
+## System Requirements
 
-## Gameplay Mechanics
+### Minimum Requirements
+- **OS**: Windows 10 / macOS 10.14 (Mojave) or later
+- **Processor**: Intel Core i5 or AMD equivalent
+- **Memory**: 8 GB RAM
+- **Graphics**: NVIDIA GTX 960 or equivalent
+- **Storage**: 10 GB available space
 
-### Inventory Management
+### Recommended Requirements
+- **OS**: Windows 10 / macOS 11 (Big Sur) or later
+- **Processor**: Intel Core i7 or AMD equivalent
+- **Memory**: 16 GB RAM
+- **Graphics**: NVIDIA GTX 1080 or equivalent
+- **Storage**: 15 GB available space
 
-Players can collect and store various items, each categorized by type, rarity, and effects. The inventory system checks for available slots, ensuring efficient space utilization and preventing item duplication.
+## Technologies Used
 
-### Crafting System
+- **Unreal Engine 5**: Game engine used for development.
+- **C++**: Primary programming language for game logic and systems.
+- **Blueprints**: Used for rapid prototyping and UI functionality.
+- **Gameplay Tags**: For item categorization and dynamic gameplay interactions.
+- **Data Registry**: Centralized system for managing data-driven content such as items and crafting recipes.
+- **Visual Studio / Xcode**: For code editing and compilation.
 
-Gather resources from the environment to craft essential tools and weapons. The crafting system supports multiple skills and stations, allowing players to create a wide range of items to aid in their survival.
+## Contributing
 
-### Item States and Effects
+We welcome contributions from the community! To contribute:
 
-Items possess states such as durability, which degrade with use. Additionally, items can have various effects like healing, damage boosts, or defensive capabilities, enhancing the player's abilities and strategies.
-
-### Server-Side Authority
-
-All critical actions, such as adding or removing items from the inventory, are handled on the server to maintain game integrity and prevent client-side manipulation.
-
-## Installation
-
-### Prerequisites
-
-- **Unreal Engine 4.27** or later.
-- **Visual Studio 2019** or later (for Windows) / **Xcode** (for macOS).
-
-### Steps
-
-1. **Clone the Repository:**
-
+1. **Fork the repository**.
+2. **Create a new branch** for your feature or bug fix:
    ```bash
-   git clone https://github.com/yourusername/medieval-survival-game.git
+   git checkout -b feature/new-feature
