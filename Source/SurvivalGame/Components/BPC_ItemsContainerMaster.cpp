@@ -1,9 +1,9 @@
-// BPC_ItemsContainerMaster.cpp
-
 #include "BPC_ItemsContainerMaster.h"
 #include "Net/UnrealNetwork.h"
-#include "SurvivalGame/Data/PDA_ItemInfo.h" // Adjust the path as necessary
-#include "Engine/Engine.h" // For UE_LOG
+#include "DataRegistrySubsystem.h"
+#include "DataRegistry.h"
+#include "Engine/Engine.h"
+
 
 // Sets default values for this component's properties
 UItemsContainerMaster::UItemsContainerMaster()
@@ -13,19 +13,20 @@ UItemsContainerMaster::UItemsContainerMaster()
 
     // Initialize default values
     ContainerType = E_ContainerType::None;
-    Items = TArray<FItemStructure>();
+    // Initialize Items array with desired size if needed
 }
 
 // Called when the game starts
 void UItemsContainerMaster::BeginPlay()
 {
     Super::BeginPlay();
-    
+
     // Initialization logic here (if any)
 }
 
 // Called every frame
-void UItemsContainerMaster::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UItemsContainerMaster::TickComponent(float DeltaTime, ELevelTick TickType,
+    FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -33,7 +34,8 @@ void UItemsContainerMaster::TickComponent(float DeltaTime, ELevelTick TickType, 
 }
 
 // Ensure properties are replicated
-void UItemsContainerMaster::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void UItemsContainerMaster::GetLifetimeReplicatedProps(
+    TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
@@ -43,22 +45,73 @@ void UItemsContainerMaster::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 // Replication callback for Items array
 void UItemsContainerMaster::OnRep_Items()
 {
-    // Handle any client-side logic when Items array is updated
-    // For example, update UI or notify other systems
+    // Handle client-side logic when Items array is updated
+    UE_LOG(LogTemp, Log, TEXT("OnRep_Items: Items array replicated"));
+    // Broadcast an event or call a function here if needed
 }
 
 // Function to find an empty slot
-bool UItemsContainerMaster::FindEmptySlot(int32& OutEmptySlotIndex)
+bool UItemsContainerMaster::FindEmptySlot(int32& OutEmptySlotIndex) const
 {
     for (int32 Index = 0; Index < Items.Num(); ++Index)
     {
-        if (Items[Index].ItemID == 0 && !Items[Index].ItemAsset.IsValid())
+        if (Items[Index].RegistryKey == NAME_None)
         {
             OutEmptySlotIndex = Index;
             return true;
         }
     }
     return false;
+}
+
+// Function to find a slot where the item can be stacked
+bool UItemsContainerMaster::FindStackableSlot(const FName& ItemRegistryKey,
+    int32& OutSlotIndex) const
+{
+    for (int32 Index = 0; Index < Items.Num(); ++Index)
+    {
+        if (Items[Index].RegistryKey == ItemRegistryKey &&
+            Items[Index].ItemQuantity < Items[Index].MaxStackSize)
+        {
+            OutSlotIndex = Index;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to load item data from the Data Registry
+bool UItemsContainerMaster::LoadItemData(const FDataRegistryId& ItemRegistryId, FItemStructure& OutItemData)
+{
+    UDataRegistrySubsystem* DataRegistrySubsystem = UDataRegistrySubsystem::Get();
+    if (!DataRegistrySubsystem)
+    {
+        UE_LOG(LogTemp, Error, TEXT("LoadItemData: DataRegistrySubsystem not found."));
+        return false;
+    }
+
+    const uint8* ItemMemory = nullptr;
+    const UScriptStruct* ItemStruct = nullptr;
+
+    FDataRegistryCacheGetResult GetResult = DataRegistrySubsystem->GetCachedItemRaw(ItemMemory, ItemStruct, ItemRegistryId);
+    if (GetResult)
+    {
+        if (ItemStruct && ItemStruct->IsChildOf(FItemStructure::StaticStruct()))
+        {
+            OutItemData = *reinterpret_cast<const FItemStructure*>(ItemMemory);
+            return true;
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("LoadItemData: ItemStruct is not of type FItemStructure."));
+            return false;
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("LoadItemData: Item data not found for ID %s."), *ItemRegistryId.ToString());
+        return false;
+    }
 }
 
 // Function to add an item to the inventory
@@ -71,28 +124,77 @@ bool UItemsContainerMaster::AddItem(const FItemStructure& NewItem)
         return false; // Client cannot add the item directly
     }
 
-    int32 EmptySlotIndex;
-    if (FindEmptySlot(EmptySlotIndex))
+    int32 SlotIndex;
+
+    // Try to find a stackable slot first
+    if (NewItem.bIsStackable &&
+        FindStackableSlot(NewItem.RegistryKey, SlotIndex))
     {
-        // Initialize the item from its Data Asset
-        FItemStructure InitializedItem = NewItem;
-        InitializedItem.InitializeFromAsset();
+        // Add to existing stack
+        int32 AvailableSpace = Items[SlotIndex].MaxStackSize -
+                               Items[SlotIndex].ItemQuantity;
+        int32 QuantityToAdd = FMath::Min(NewItem.ItemQuantity, AvailableSpace);
+        Items[SlotIndex].ItemQuantity += QuantityToAdd;
 
-        Items[EmptySlotIndex] = InitializedItem;
-        UpdateTagMapOnItemAdd(InitializedItem);
+        UpdateTagMapOnItemAdd(Items[SlotIndex]);
+        OnItemAdded.Broadcast(Items[SlotIndex], SlotIndex);
 
-        // Broadcast the item added event
-        OnItemAdded.Broadcast(InitializedItem, EmptySlotIndex);
+        UE_LOG(LogTemp, Log,
+            TEXT("AddItem: Stacked item '%s' in slot %d. Quantity: %d"),
+            *Items[SlotIndex].ItemName.ToString(), SlotIndex,
+            Items[SlotIndex].ItemQuantity);
 
-        UE_LOG(LogTemp, Log, TEXT("Item ID %d with Rarity %s added to slot %d"),
-            InitializedItem.ItemID,
-            *UEnum::GetValueAsString(InitializedItem.ItemRarity),
-            EmptySlotIndex);
-        return true; // Item successfully added
+        // If there's remaining quantity, try to add it to a new slot
+        if (NewItem.ItemQuantity > QuantityToAdd)
+        {
+            FItemStructure RemainingItem = NewItem;
+            RemainingItem.ItemQuantity -= QuantityToAdd;
+            return AddItem(RemainingItem);
+        }
+        return true;
+    }
+    // If stacking is not possible, find an empty slot
+    else if (FindEmptySlot(SlotIndex))
+    {
+        FDataRegistryId ItemRegistryId(FName("DR_ItemRegistry"), NewItem.RegistryKey);
+        FItemStructure LoadedItem;
+
+        // Attempt to retrieve the item data from the Data Registry
+        if (LoadItemData(ItemRegistryId, LoadedItem))
+        {
+            // Initialize the item structure with data from Data Registry
+            FItemStructure InitializedItem = LoadedItem;
+            InitializedItem.ItemQuantity = NewItem.ItemQuantity;
+            InitializedItem.UniqueInstanceID = FGuid::NewGuid();
+
+            // Add the initialized item to the inventory
+            Items[SlotIndex] = InitializedItem;
+
+            UpdateTagMapOnItemAdd(Items[SlotIndex]);
+
+            // Broadcast the item added event
+            OnItemAdded.Broadcast(Items[SlotIndex], SlotIndex);
+
+            UE_LOG(LogTemp, Log,
+                TEXT("AddItem: Item '%s' added to slot %d"),
+                *InitializedItem.ItemName.ToString(), SlotIndex);
+            return true; // Item successfully added
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning,
+                TEXT("AddItem: Failed to retrieve item data for "
+                     "RegistryKey: %s"),
+                *NewItem.RegistryKey.ToString());
+            return false;
+        }
     }
 
     // Inventory is full
-    UE_LOG(LogTemp, Warning, TEXT("AddItem: Inventory is full, cannot add item ID %d"), NewItem.ItemID);
+    UE_LOG(LogTemp, Warning,
+        TEXT("AddItem: Inventory is full, cannot add item with "
+             "RegistryKey: %s"),
+        *NewItem.RegistryKey.ToString());
     return false;
 }
 
@@ -106,7 +208,8 @@ bool UItemsContainerMaster::RemoveItem(int32 SlotIndex)
         return false; // Client cannot remove the item directly
     }
 
-    if (Items.IsValidIndex(SlotIndex) && Items[SlotIndex].ItemID != 0)
+    if (Items.IsValidIndex(SlotIndex) &&
+        Items[SlotIndex].RegistryKey != NAME_None)
     {
         FItemStructure RemovedItem = Items[SlotIndex];
         Items[SlotIndex] = FItemStructure(); // Reset the slot to default
@@ -116,12 +219,16 @@ bool UItemsContainerMaster::RemoveItem(int32 SlotIndex)
         // Broadcast the item removed event
         OnItemRemoved.Broadcast(RemovedItem, SlotIndex);
 
-        UE_LOG(LogTemp, Log, TEXT("Item ID %d removed from slot %d"), RemovedItem.ItemID, SlotIndex);
+        UE_LOG(LogTemp, Log,
+            TEXT("RemoveItem: Item '%s' removed from slot %d"),
+            *RemovedItem.ItemName.ToString(), SlotIndex);
         return true; // Item successfully removed
     }
 
     // Invalid slot or already empty
-    UE_LOG(LogTemp, Warning, TEXT("RemoveItem: Invalid slot index %d or slot already empty."), SlotIndex);
+    UE_LOG(LogTemp, Warning,
+        TEXT("RemoveItem: Invalid slot index %d or slot already empty."),
+        SlotIndex);
     return false;
 }
 
@@ -129,11 +236,30 @@ bool UItemsContainerMaster::RemoveItem(int32 SlotIndex)
 
 bool UItemsContainerMaster::Server_AddItem_Validate(const FItemStructure& NewItem)
 {
-    // Add validation logic here to prevent cheating
-    return NewItem.ItemID > 0 && NewItem.ItemAsset.IsValid();
+    UDataRegistrySubsystem* DataRegistrySubsystem = UDataRegistrySubsystem::Get();
+    if (!DataRegistrySubsystem)
+    {
+        return false;
+    }
+
+    FDataRegistryId ItemRegistryId(FName("DR_ItemRegistry"), NewItem.RegistryKey);
+
+    const uint8* ItemMemory = nullptr;
+    const UScriptStruct* ItemStruct = nullptr;
+
+    FDataRegistryCacheGetResult GetResult = DataRegistrySubsystem->GetCachedItemRaw(ItemMemory, ItemStruct, ItemRegistryId);
+    if (GetResult)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
-void UItemsContainerMaster::Server_AddItem_Implementation(const FItemStructure& NewItem)
+void UItemsContainerMaster::Server_AddItem_Implementation(
+    const FItemStructure& NewItem)
 {
     AddItem(NewItem);
 }
@@ -150,27 +276,32 @@ void UItemsContainerMaster::Server_RemoveItem_Implementation(int32 SlotIndex)
 }
 
 // Retrieves all items with a specific gameplay tag
-TArray<FItemStructure> UItemsContainerMaster::GetItemsWithTag(const FGameplayTag& DesiredTag) const
+TArray<FItemStructure> UItemsContainerMaster::GetItemsWithTag(
+    const FGameplayTag& DesiredTag) const
 {
-    if (const TArray<FItemStructure>* FilteredItems = TagToItemsMap.Find(DesiredTag))
+    TArray<FItemStructure> ItemsWithTag;
+    if (const TArray<FItemStructure>* FoundItems =
+            TagToItemsMap.Find(DesiredTag))
     {
-        return *FilteredItems;
+        ItemsWithTag = *FoundItems;
     }
-    return TArray<FItemStructure>(); // Return empty if no items with the tag
+    return ItemsWithTag;
 }
 
 // Checks if any item in the inventory has a specific tag
-bool UItemsContainerMaster::HasItemWithTag(const FGameplayTag& DesiredTag) const
+bool UItemsContainerMaster::HasItemWithTag(
+    const FGameplayTag& DesiredTag) const
 {
     return TagToItemsMap.Contains(DesiredTag);
 }
 
 // Checks if any item in the inventory has any tag from a set
-bool UItemsContainerMaster::HasAnyItemWithTagFromSet(const FGameplayTagContainer& TagSet) const
+bool UItemsContainerMaster::HasAnyItemWithTagFromSet(
+    const FGameplayTagContainer& TagSet) const
 {
-    for (const FItemStructure& Item : Items)
+    for (const FGameplayTag& Tag : TagSet)
     {
-        if (Item.ItemTags.HasAny(TagSet))
+        if (TagToItemsMap.Contains(Tag))
         {
             return true;
         }
@@ -179,7 +310,8 @@ bool UItemsContainerMaster::HasAnyItemWithTagFromSet(const FGameplayTagContainer
 }
 
 // Add a tag to an item
-bool UItemsContainerMaster::AddTagToItem(int32 SlotIndex, const FGameplayTag& NewTag)
+bool UItemsContainerMaster::AddTagToItem(int32 SlotIndex,
+    const FGameplayTag& NewTag)
 {
     if (Items.IsValidIndex(SlotIndex))
     {
@@ -191,32 +323,31 @@ bool UItemsContainerMaster::AddTagToItem(int32 SlotIndex, const FGameplayTag& Ne
 }
 
 // Update the tag map when adding an item
-void UItemsContainerMaster::UpdateTagMapOnItemAdd(const FItemStructure& NewItem)
+void UItemsContainerMaster::UpdateTagMapOnItemAdd(
+    const FItemStructure& NewItem)
 {
-    if (NewItem.ItemTags.Num() > 0)
+    for (const FGameplayTag& Tag : NewItem.ItemTags)
     {
-        for (const FGameplayTag& Tag : NewItem.ItemTags)
-        {
-            TArray<FItemStructure>& ItemsWithTag = TagToItemsMap.FindOrAdd(Tag);
-            ItemsWithTag.Add(NewItem);
-        }
+        TagToItemsMap.FindOrAdd(Tag).Add(NewItem);
     }
 }
 
 // Update the tag map when removing an item
-void UItemsContainerMaster::UpdateTagMapOnItemRemove(const FItemStructure& RemovedItem)
+void UItemsContainerMaster::UpdateTagMapOnItemRemove(
+    const FItemStructure& RemovedItem)
 {
-    if (RemovedItem.ItemTags.Num() > 0)
+    for (const FGameplayTag& Tag : RemovedItem.ItemTags)
     {
-        for (const FGameplayTag& Tag : RemovedItem.ItemTags)
+        if (TArray<FItemStructure>* ItemsWithTag = TagToItemsMap.Find(Tag))
         {
-            if (TArray<FItemStructure>* ItemsWithTag = TagToItemsMap.Find(Tag))
+            ItemsWithTag->RemoveAll([&RemovedItem](const FItemStructure& Item)
             {
-                ItemsWithTag->Remove(RemovedItem);
-                if (ItemsWithTag->Num() == 0)
-                {
-                    TagToItemsMap.Remove(Tag);
-                }
+                return Item.UniqueInstanceID == RemovedItem.UniqueInstanceID;
+            });
+
+            if (ItemsWithTag->Num() == 0)
+            {
+                TagToItemsMap.Remove(Tag);
             }
         }
     }

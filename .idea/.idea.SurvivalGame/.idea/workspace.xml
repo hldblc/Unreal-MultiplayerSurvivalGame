@@ -12,28 +12,42 @@
   <component name="ChangeListManager">
     <list default="true" id="2ec72d29-43d5-430b-b83a-02d75acd51a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGame.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGame.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "hldblc"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;hldblc&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/hldblc/SurvivalGame.git",
-    "accountId": "c5c84a6c-3faa-43b9-930e-f14b30ce6836"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hldblc/SurvivalGame.git&quot;,
+    &quot;accountId&quot;: &quot;c5c84a6c-3faa-43b9-930e-f14b30ce6836&quot;
   }
-}]]></component>
+}</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -45,6 +59,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;C++ Project.SurvivalGame.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -480,6 +495,12 @@
       <workItem from="1727947724756" duration="91000" />
       <workItem from="1727947829412" duration="606000" />
       <workItem from="1727948453158" duration="202000" />
+      <workItem from="1728031239400" duration="1981000" />
+      <workItem from="1728107199699" duration="11509000" />
+      <workItem from="1728121439882" duration="29000" />
+      <workItem from="1728121491983" duration="1390000" />
+      <workItem from="1728122990492" duration="466000" />
+      <workItem from="1728123478884" duration="719000" />
     </task>
     <task id="LOCAL-00001" summary="Normalize all line endings according to .gitattributes">
       <option name="closed" value="true" />

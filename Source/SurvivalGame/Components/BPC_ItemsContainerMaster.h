@@ -1,31 +1,29 @@
-// BPC_ItemsContainerMaster.h
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "SurvivalGame/Enums/ContainerType.h"
-#include "SurvivalGame/Enums/ItemEnums.h"
 #include "SurvivalGame/Structs/S_ItemStructure.h"
-#include "GameplayTagContainer.h" // Include Gameplay Tags
+#include "GameplayTagContainer.h"
+#include "DataRegistryId.h"
 #include "BPC_ItemsContainerMaster.generated.h"
 
-// Forward declarations
-class UPDA_ItemInfo;
-
 // Delegate Declarations
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemAddedSignature, const FItemStructure&, AddedItem, int32, SlotIndex);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemRemovedSignature, const FItemStructure&, RemovedItem, int32, SlotIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemAddedSignature,
+    const FItemStructure&, AddedItem, int32, SlotIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemRemovedSignature,
+    const FItemStructure&, RemovedItem, int32, SlotIndex);
 
 /**
  * @brief Component managing a container of items.
  */
-UCLASS(ClassGroup=(Custom), Blueprintable, BlueprintType, meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), Blueprintable, BlueprintType,
+    meta = (BlueprintSpawnableComponent))
 class SURVIVALGAME_API UItemsContainerMaster : public UActorComponent
 {
     GENERATED_BODY()
 
-public:    
+public:
     // Sets default values for this component's properties
     UItemsContainerMaster();
 
@@ -33,12 +31,14 @@ protected:
     // Called when the game starts
     virtual void BeginPlay() override;
 
-public:    
+public:
     // Called every frame
-    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+        FActorComponentTickFunction* ThisTickFunction) override;
 
     /** Array of items in the container */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory", ReplicatedUsing=OnRep_Items)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory",
+        ReplicatedUsing = OnRep_Items)
     TArray<FItemStructure> Items;
 
     /** Type of the container */
@@ -54,7 +54,6 @@ public:
     FOnItemRemovedSignature OnItemRemoved;
 
     /** Map to store items categorized by their tags for fast lookup */
-    // Removed UPROPERTY macro as TMap with TArray values is not supported with UPROPERTY
     TMap<FGameplayTag, TArray<FItemStructure>> TagToItemsMap;
 
     /**
@@ -63,7 +62,17 @@ public:
      * @return True if an empty slot is found; otherwise, false.
      */
     UFUNCTION(BlueprintCallable, Category = "Inventory")
-    bool FindEmptySlot(int32& OutEmptySlotIndex);
+    bool FindEmptySlot(int32& OutEmptySlotIndex) const;
+
+    /**
+     * @brief Finds a slot where the item can be stacked.
+     * @param ItemRegistryKey The registry key of the item to stack.
+     * @param OutSlotIndex Index of the stackable slot if found.
+     * @return True if a stackable slot is found; otherwise, false.
+     */
+    UFUNCTION(BlueprintCallable, Category = "Inventory")
+    bool FindStackableSlot(const FName& ItemRegistryKey,
+        int32& OutSlotIndex) const;
 
     /**
      * @brief Adds an item to the inventory.
@@ -85,14 +94,16 @@ public:
      * @brief Server RPC to add an item to the inventory.
      * @param NewItem The item to add.
      */
-    UFUNCTION(Server, Reliable, WithValidation, BlueprintCallable, Category = "Inventory|Server")
+    UFUNCTION(Server, Reliable, WithValidation, BlueprintCallable,
+        Category = "Inventory|Server")
     void Server_AddItem(const FItemStructure& NewItem);
 
     /**
      * @brief Server RPC to remove an item from the inventory.
      * @param SlotIndex The index of the slot to remove the item from.
      */
-    UFUNCTION(Server, Reliable, WithValidation, BlueprintCallable, Category = "Inventory|Server")
+    UFUNCTION(Server, Reliable, WithValidation, BlueprintCallable,
+        Category = "Inventory|Server")
     void Server_RemoveItem(int32 SlotIndex);
 
     /**
@@ -117,7 +128,8 @@ public:
      * @return True if any item has any of the tags; otherwise, false.
      */
     UFUNCTION(BlueprintCallable, Category = "Inventory|Tags")
-    bool HasAnyItemWithTagFromSet(const FGameplayTagContainer& TagSet) const;
+    bool HasAnyItemWithTagFromSet(
+        const FGameplayTagContainer& TagSet) const;
 
     /**
      * @brief Adds a gameplay tag to an item at a specified slot.
@@ -138,4 +150,7 @@ private:
 
     /** Updates the tag-to-item map when an item is removed */
     void UpdateTagMapOnItemRemove(const FItemStructure& RemovedItem);
+
+    /** Helper function to load item data from Data Registry */
+    bool LoadItemData(const FDataRegistryId& ItemRegistryId, FItemStructure& OutItemData);
 };

@@ -15,6 +15,7 @@ public class SurvivalGame : ModuleRules
             "Core",
             "CoreUObject",
             "Engine",
+            "DataRegistry",
             "InputCore",
             "EnhancedInput",      // For enhanced input handling
             "CommonUI",           // For CommonUI widgets

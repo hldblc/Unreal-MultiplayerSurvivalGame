@@ -21,6 +21,10 @@ public:
     /** Constructor */
     UPDA_ItemInfo();
 
+    /** Unique identifier for the item (Used by Data Registry) */
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (DisplayName = "Registry Key"))
+    FName RegistryKey;
+
     /** Unique identifier for the item */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
     int32 ItemID;
@@ -188,4 +192,6 @@ public:
     /** Initial state of the item (e.g., Raw, Processed, Broken) */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "State")
     E_ItemState InitialItemState;
+
+    // Close the class definition
 };

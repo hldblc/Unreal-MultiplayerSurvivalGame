@@ -3,17 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SurvivalGame/Enums/ItemEnums.h"    // Include your enums
-#include "GameplayTagContainer.h"            // Include Gameplay Tags
+#include "GameplayTagContainer.h"
+#include "Engine/DataTable.h"
+#include "SurvivalGame/Enums/ItemEnums.h"
 #include "S_ItemStructure.generated.h"
 
-// Forward declaration to avoid circular dependency
-class UPDA_ItemInfo;
 
 /**
  * @brief Structure representing a modifier or enchantment applied to an item.
  */
-USTRUCT(BlueprintType, Blueprintable, meta = (DisplayName = "Item Structure"))
+USTRUCT(BlueprintType)
 struct FItemModifier
 {
     GENERATED_BODY()
@@ -72,7 +71,7 @@ public:
  * @brief Structure representing an item within the game.
  */
 USTRUCT(BlueprintType)
-struct FItemStructure
+struct FItemStructure : public FTableRowBase
 {
     GENERATED_BODY()
 
@@ -81,13 +80,13 @@ public:
     /// Basic Item Properties
     //////////////////////////////////////////
 
-    /** Unique identifier for the item */
+    /** Unique identifier for the item (Registry Key) */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-    int32 ItemID;
+    FName RegistryKey;
 
-    /** Reference to the item's Data Asset (Soft Object Reference) */
+    /** Name of the item */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-    TSoftObjectPtr<UPDA_ItemInfo> ItemAsset;
+    FText ItemName;
 
     /** Quantity of the item */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item", meta = (ClampMin = "1"))
@@ -141,6 +140,10 @@ public:
     /// Ammunition (if applicable)
     //////////////////////////////////////////
 
+    /** Indicates if the item uses ammunition */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammunition")
+    bool bUsesAmmo;
+
     /** Current ammunition count */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammunition", meta = (EditCondition = "bUsesAmmo", ClampMin = "0"))
     int32 CurrentAmmo;
@@ -148,10 +151,6 @@ public:
     /** Maximum ammunition capacity */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammunition", meta = (EditCondition = "bUsesAmmo", ClampMin = "1"))
     int32 MaxAmmo;
-
-    /** Indicates if the item uses ammunition */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammunition")
-    bool bUsesAmmo;
 
     //////////////////////////////////////////
     /// Consumable Properties
@@ -205,6 +204,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physical", meta = (EditCondition = "bIsFlammable", ClampMin = "0.0"))
     float BurnTime;
 
+    //////////////////////////////////////////
+    /// Special Properties
+    //////////////////////////////////////////
+
     /** Special ability or effect granted when the item is used or equipped */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Special")
     FString SpecialAbility;
@@ -241,6 +244,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers")
     TArray<FItemModifier> DefaultModifiers;
 
+    /** Item Modifiers */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers")
+    TArray<FItemModifier> ItemModifiers;
+
     /** Initial state of the item (e.g., Raw, Processed, Broken) */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
     E_ItemState InitialItemState;
@@ -249,10 +256,6 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State")
     E_ItemState ItemState;
 
-    /** Item Modifiers */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Modifiers")
-    TArray<FItemModifier> ItemModifiers;
-
     //////////////////////////////////////////
     /// Constructor and Functions
     //////////////////////////////////////////
@@ -260,8 +263,11 @@ public:
     /** Constructor for default initialization */
     FItemStructure();
 
-    /** Function to initialize dynamic properties based on ItemAsset */
-    void InitializeFromAsset();
+    /**
+     * @brief Initializes dynamic properties based on the Data Registry data.
+     * @param LoadedItem The item data retrieved from the Data Registry.
+     */
+    void InitializeFromData(const FItemStructure& LoadedItem);
 
     /** Equality operator overload */
     bool operator==(const FItemStructure& Other) const;
