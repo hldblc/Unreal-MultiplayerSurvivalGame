@@ -12,14 +12,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2ec72d29-43d5-430b-b83a-02d75acd51a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Components/BPC_ItemsMasterComponent.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Components/BPC_ItemsMasterComponent.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Components/Child/BPC_InventoryComponent.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Components/Child/BPC_InventoryComponent.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGame.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGame.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -501,6 +498,11 @@
       <workItem from="1728121491983" duration="1390000" />
       <workItem from="1728122990492" duration="466000" />
       <workItem from="1728123478884" duration="719000" />
+      <workItem from="1728192302084" duration="117000" />
+      <workItem from="1728195915827" duration="423000" />
+      <workItem from="1728197398972" duration="252000" />
+      <workItem from="1728278860437" duration="809000" />
+      <workItem from="1728283815133" duration="2740000" />
     </task>
     <task id="LOCAL-00001" summary="Normalize all line endings according to .gitattributes">
       <option name="closed" value="true" />

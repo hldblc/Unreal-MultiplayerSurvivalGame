@@ -45,10 +45,26 @@ void UItemsContainerMaster::GetLifetimeReplicatedProps(
 // Replication callback for Items array
 void UItemsContainerMaster::OnRep_Items()
 {
-    // Handle client-side logic when Items array is updated
     UE_LOG(LogTemp, Log, TEXT("OnRep_Items: Items array replicated"));
-    // Broadcast an event or call a function here if needed
+    
+    // Clear the existing tag map
+    TagToItemsMap.Empty();
+
+    // Rebuild the tag map based on the updated Items array
+    for (const FItemStructure& Item : Items)
+    {
+        if (Item.RegistryKey != NAME_None)
+        {
+            for (const FGameplayTag& Tag : Item.ItemTags)
+            {
+                TagToItemsMap.FindOrAdd(Tag).Add(Item);
+            }
+        }
+    }
+
+    // Optionally, broadcast an event or update UI here
 }
+
 
 // Function to find an empty slot
 bool UItemsContainerMaster::FindEmptySlot(int32& OutEmptySlotIndex) const
