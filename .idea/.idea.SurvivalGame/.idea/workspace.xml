@@ -11,23 +11,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ec72d29-43d5-430b-b83a-02d75acd51a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ArmorInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ArmorInfo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ConsumableInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ConsumableInfo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ResourceInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ResourceInfo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ToolInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ToolInfo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_WeaponInfo.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_WeaponInfo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Enums/CraftingEnums.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SurvivalGame/Enums/EnvironmentEnum.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SurvivalGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ItemInfo.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/_MAIN/Data/Items/Resources/DA_ItemInfo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/_MAIN/Data/Items/Resources/DA_ItemInfo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/7/8K/0OLPBOSZCPU1X7E3PCLCGF.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Actors/ItemMaster.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Components/BPC_ItemsContainerMaster.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ArmorInfo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ArmorInfo.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ConsumableInfo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ConsumableInfo.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ResourceInfo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ResourceInfo.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ToolInfo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_ToolInfo.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_WeaponInfo.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Data/PDA_WeaponInfo.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Enums/ItemEnums.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Enums/ItemEnums.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/Structs/S_ItemStructure.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/Structs/S_ItemStructure.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Data/Structs/S_ItemStructure.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGameCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGameCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGameGameMode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameGameMode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGameGameMode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGamePlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGamePlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGamePlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SurvivalGame/Characters/SurvivalGamePlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameProjectile.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/SurvivalGameProjectile.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/TP_PickUpComponent.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/TP_PickUpComponent.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/TP_WeaponComponent.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SurvivalGame/TP_WeaponComponent.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +71,10 @@
     &quot;accountId&quot;: &quot;c5c84a6c-3faa-43b9-930e-f14b30ce6836&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SurvivalGame/UHT/ItemMaster.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -61,6 +84,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2mvCa09mBfSwd9up2snrTZd2kg6" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -514,7 +540,8 @@
       <workItem from="1728197398972" duration="252000" />
       <workItem from="1728278860437" duration="809000" />
       <workItem from="1728283815133" duration="2740000" />
-      <workItem from="1728364398208" duration="8207000" />
+      <workItem from="1728364398208" duration="20678000" />
+      <workItem from="1728536608049" duration="3671000" />
     </task>
     <task id="LOCAL-00001" summary="Normalize all line endings according to .gitattributes">
       <option name="closed" value="true" />

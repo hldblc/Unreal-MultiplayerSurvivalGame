@@ -5,9 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "Engine/DataTable.h"
-#include "SurvivalGame/Enums/ItemEnums.h"
+#include "SurvivalGame/Enums/ItemEnums.h" // Adjust the include path as necessary
 #include "S_ItemStructure.generated.h"
-
 
 /**
  * @brief Structure representing a modifier or enchantment applied to an item.
@@ -271,4 +270,52 @@ public:
 
     /** Equality operator overload */
     bool operator==(const FItemStructure& Other) const;
+};
+
+/**
+ * @brief Structure representing special effects properties, used in tools, weapons, resources.
+ */
+USTRUCT(BlueprintType)
+struct FSpecialEffectProperties
+{
+    GENERATED_BODY()
+
+public:
+    /** Magnitude of the special effect */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecialEffect")
+    float Magnitude;
+
+    /** Duration of the special effect in seconds */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpecialEffect")
+    float Duration;
+
+    /** Constructor for default initialization */
+    FSpecialEffectProperties()
+        : Magnitude(0.0f)
+        , Duration(0.0f)
+    {}
+};
+
+/**
+ * @brief Structure representing resource effect properties, used in resource info.
+ */
+USTRUCT(BlueprintType)
+struct FResourceEffectProperties
+{
+    GENERATED_BODY()
+
+public:
+    /** Magnitude of the effect */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect", meta = (ClampMin = "0.0"))
+    float Magnitude;
+
+    /** Duration of the effect in seconds (0 for permanent) */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect", meta = (ClampMin = "0.0"))
+    float Duration;
+
+    /** Constructor for default initialization */
+    FResourceEffectProperties()
+        : Magnitude(0.0f)
+        , Duration(0.0f)
+    {}
 };

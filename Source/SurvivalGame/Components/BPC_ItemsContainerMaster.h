@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "SurvivalGame/Enums/ContainerType.h"
-#include "SurvivalGame/Structs/S_ItemStructure.h"
+#include "SurvivalGame/Data/Structs/S_ItemStructure.h"
 #include "GameplayTagContainer.h"
 #include "DataRegistryId.h"
 #include "BPC_ItemsContainerMaster.generated.h"

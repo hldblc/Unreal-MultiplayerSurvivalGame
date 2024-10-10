@@ -1,4 +1,6 @@
-#include "S_ItemStructure.h"
+// S_ItemStructure.cpp
+
+#include "SurvivalGame/Data/Structs/S_ItemStructure.h"
 
 FItemStructure::FItemStructure()
     : RegistryKey(NAME_None)

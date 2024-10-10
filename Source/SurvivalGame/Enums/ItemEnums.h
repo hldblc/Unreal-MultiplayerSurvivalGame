@@ -5,49 +5,6 @@
 #include "CoreMinimal.h"
 #include "ItemEnums.generated.h"
 
-//////////////////////////////////////////
-/// Crafting Skill Enumeration
-//////////////////////////////////////////
-
-/**
- * @brief Enum representing the primary crafting skills required for crafting items.
- */
-UENUM(BlueprintType)
-enum class E_CraftingSkill : uint8
-{
-    None            UMETA(DisplayName = "None"),
-    Smithing        UMETA(DisplayName = "Smithing"),
-    Woodworking     UMETA(DisplayName = "Woodworking"),
-    Alchemy         UMETA(DisplayName = "Alchemy"),
-    Tailoring       UMETA(DisplayName = "Tailoring"),
-    Cooking         UMETA(DisplayName = "Cooking"),
-    Leatherworking  UMETA(DisplayName = "Leatherworking"),
-    Stonecutting    UMETA(DisplayName = "Stonecutting"),
-    // Add additional skills as needed
-    Invalid         UMETA(Hidden)
-};
-
-//////////////////////////////////////////
-/// Crafting Station Enumeration
-//////////////////////////////////////////
-
-/**
- * @brief Enum representing the crafting stations required for specific crafting recipes.
- */
-UENUM(BlueprintType)
-enum class E_CraftingStation : uint8
-{
-    None                UMETA(DisplayName = "None"),
-    Forge               UMETA(DisplayName = "Forge"),
-    CarpenterBench      UMETA(DisplayName = "Carpenter's Bench"),
-    AlchemyLab          UMETA(DisplayName = "Alchemy Lab"),
-    TailorStation       UMETA(DisplayName = "Tailor Station"),
-    CookingFire         UMETA(DisplayName = "Cooking Fire"),
-    LeatherworkBench    UMETA(DisplayName = "Leatherwork Bench"),
-    MasonryKiln         UMETA(DisplayName = "Masonry Kiln"),
-    // Add additional stations as needed
-    Invalid             UMETA(Hidden)
-};
 
 //////////////////////////////////////////
 /// Item Effect Enumeration
@@ -61,11 +18,10 @@ enum class E_ItemEffect : uint8
 {
     None              UMETA(DisplayName = "None"),
     Healing           UMETA(DisplayName = "Healing"),
-    Buff              UMETA(DisplayName = "Buff"),
-    Poison            UMETA(DisplayName = "Poison"),
     StaminaRecovery   UMETA(DisplayName = "Stamina Recovery"),
+    Buff              UMETA(DisplayName = "Defense Boost"),
     DamageBoost       UMETA(DisplayName = "Damage Boost"),
-    ElementalResistance UMETA(DisplayName = "Elemental Resistance"),
+    Poison            UMETA(DisplayName = "Poison"),
     // Add additional effects as needed
     Invalid           UMETA(Hidden)
 };
@@ -137,7 +93,7 @@ enum class E_ItemCategory : uint8
 //////////////////////////////////////////
 
 /**
- * @brief Enum representing the state of the item (e.g., Raw, Processed, Broken).
+ * @brief Enum representing the state of the item (e.g., Normal, Raw, Processed, Broken, Spoiled).
  */
 UENUM(BlueprintType)
 enum class E_ItemState : uint8
@@ -149,6 +105,24 @@ enum class E_ItemState : uint8
     Broken      UMETA(DisplayName = "Broken"),
     Spoiled     UMETA(DisplayName = "Spoiled"),
     // Add additional states as needed
+    Invalid     UMETA(Hidden)
+};
+
+//////////////////////////////////////////
+/// Resource State Enumeration
+//////////////////////////////////////////
+
+/**
+ * @brief Enum representing the state of the resource (e.g., Raw, Processed, Refined).
+ */
+UENUM(BlueprintType)
+enum class E_ResourceState : uint8
+{
+    None        UMETA(DisplayName = "None"),
+    Raw         UMETA(DisplayName = "Raw"),
+    Processed   UMETA(DisplayName = "Processed"),
+    Refined     UMETA(DisplayName = "Refined"),
+    // Add additional resource states as needed
     Invalid     UMETA(Hidden)
 };
 
@@ -345,12 +319,31 @@ enum class E_EnchantmentType : uint8
 UENUM(BlueprintType)
 enum class E_ResourceType : uint8
 {
-	None        UMETA(DisplayName = "None"),
-	Wood        UMETA(DisplayName = "Wood"),
-	Stone       UMETA(DisplayName = "Stone"),
-	Herbs       UMETA(DisplayName = "Herbs"),
-	Metal       UMETA(DisplayName = "Metal"),
-	Leather     UMETA(DisplayName = "Leather"),
-	// Add additional resource types as needed
-	Invalid     UMETA(Hidden)
+    None        UMETA(DisplayName = "None"),
+    Wood        UMETA(DisplayName = "Wood"),
+    Tree        UMETA(DisplayName = "Tree"),         // Added Tree
+    Herbs       UMETA(DisplayName = "Herbs"),
+    Stone       UMETA(DisplayName = "Stone"),
+    Metal       UMETA(DisplayName = "Metal"),
+    Leather     UMETA(DisplayName = "Leather"),
+    // Add additional resource types as needed
+    Invalid     UMETA(Hidden)
+};
+
+//////////////////////////////////////////
+/// ItemType Enumeration
+//////////////////////////////////////////
+
+/**
+ * @brief Enum representing the general types of items.
+ */
+UENUM(BlueprintType)
+enum class E_ItemType : uint8
+{
+    Weapon     UMETA(DisplayName = "Weapon"),
+    Armor      UMETA(DisplayName = "Armor"),
+    Consumable UMETA(DisplayName = "Consumable"),
+    Resource   UMETA(DisplayName = "Resource"),
+    Tool       UMETA(DisplayName = "Tool"),
+    // Add other item types as needed
 };
