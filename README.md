@@ -1,11 +1,13 @@
-2. **Open the Project:**
+**Multiplayer Medieval Survival Game**
+
+1. **Open the Project:**
    - Launch Unreal Engine and open the `.uproject` file located in the root of the cloned repository.
 
-3. **Install Dependencies:**
+2. **Install Dependencies:**
    - Ensure all required Unreal Engine plugins (such as Data Registry and Gameplay Tags) are enabled in **Edit > Plugins**.
    - Open **Rider** (or **Xcode** for macOS users) and compile the project by clicking **Build** in the toolbar.
 
-4. **Run the Game:**
+3. **Run the Game:**
    - Once the project is compiled, you can run it from within the Unreal Engine Editor or by packaging it for your target platform.
 
 ## Usage
