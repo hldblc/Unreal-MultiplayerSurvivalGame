@@ -3,7 +3,7 @@
 
 3. **Install Dependencies:**
    - Ensure all required Unreal Engine plugins (such as Data Registry and Gameplay Tags) are enabled in **Edit > Plugins**.
-   - Open **Visual Studio** (or **Xcode** for macOS users) and compile the project by clicking **Build** in the toolbar.
+   - Open **Rider** (or **Xcode** for macOS users) and compile the project by clicking **Build** in the toolbar.
 
 4. **Run the Game:**
    - Once the project is compiled, you can run it from within the Unreal Engine Editor or by packaging it for your target platform.
@@ -26,30 +26,13 @@ Gameplay tags are used to manage interactions and filters within the game:
 - Items are categorized by tags (e.g., "Weapon", "Consumable", "Resource").
 - Tags are used to trigger dynamic game events and behaviors (e.g., when using healing potions, equipping weapons).
 
-## System Requirements
-
-### Minimum Requirements
-- **OS**: Windows 10 / macOS 10.14 (Mojave) or later
-- **Processor**: Intel Core i5 or AMD equivalent
-- **Memory**: 8 GB RAM
-- **Graphics**: NVIDIA GTX 960 or equivalent
-- **Storage**: 10 GB available space
-
-### Recommended Requirements
-- **OS**: Windows 10 / macOS 11 (Big Sur) or later
-- **Processor**: Intel Core i7 or AMD equivalent
-- **Memory**: 16 GB RAM
-- **Graphics**: NVIDIA GTX 1080 or equivalent
-- **Storage**: 15 GB available space
-
 ## Technologies Used
 
-- **Unreal Engine 5**: Game engine used for development.
+- **Unreal Engine 5.4: Game engine used for development.
 - **C++**: Primary programming language for game logic and systems.
 - **Blueprints**: Used for rapid prototyping and UI functionality.
 - **Gameplay Tags**: For item categorization and dynamic gameplay interactions.
-- **Data Registry**: Centralized system for managing data-driven content such as items and crafting recipes.
-- **Visual Studio / Xcode**: For code editing and compilation.
+- **Rider**: For code editing and compilation.
 
 ## Contributing
 
