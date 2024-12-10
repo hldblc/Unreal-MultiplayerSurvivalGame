@@ -1,4 +1,4 @@
-**Multiplayer Medieval Survival Game**
+## Multiplayer Medieval Survival Game
 
 1. **Open the Project:**
    - Launch Unreal Engine and open the `.uproject` file located in the root of the cloned repository.
